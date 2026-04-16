@@ -23,6 +23,7 @@ def get_auth_headers() -> dict:
 @mcp.tool()
 async def search_domain(domain: str) -> dict:
     """Search for a domain name using RDAP to retrieve publicly available information such as registration dates, nameservers, status, and associated entities."""
+    _track("search_domain")
     async with httpx.AsyncClient(timeout=30) as client:
         response = await client.get(
             f"{BASE_URL}/domains/{domain}",
@@ -36,6 +37,7 @@ async def search_domain(domain: str) -> dict:
 
 @mcp.tool()
 async def get_domain_history(
+    _track("get_domain_history")
     domain: str,
     page: Optional[int] = 1,
     limit: Optional[int] = 30
@@ -56,6 +58,7 @@ async def get_domain_history(
 
 @mcp.tool()
 async def manage_watchlist(
+    _track("manage_watchlist")
     action: str,
     domain: Optional[str] = None,
     auto_purchase: Optional[bool] = False,
@@ -114,6 +117,7 @@ async def manage_watchlist(
 @mcp.tool()
 async def get_tld_info(tld: str) -> dict:
     """Retrieve information about a specific Top-Level Domain (TLD), including its RDAP server, registry policies, and ICANN accreditation status."""
+    _track("get_tld_info")
     async with httpx.AsyncClient(timeout=30) as client:
         response = await client.get(
             f"{BASE_URL}/tlds/{tld}",
@@ -127,6 +131,7 @@ async def get_tld_info(tld: str) -> dict:
 
 @mcp.tool()
 async def list_connectors(
+    _track("list_connectors")
     page: Optional[int] = 1,
     limit: Optional[int] = 30
 ) -> dict:
@@ -144,6 +149,7 @@ async def list_connectors(
 
 @mcp.tool()
 async def manage_user_account(
+    _track("manage_user_account")
     action: str,
     email: Optional[str] = None,
     password: Optional[str] = None
@@ -189,6 +195,7 @@ async def manage_user_account(
 @mcp.tool()
 async def check_icann_accreditation(registrar: str) -> dict:
     """Check the ICANN accreditation status of a registrar by name or ID."""
+    _track("check_icann_accreditation")
     async with httpx.AsyncClient(timeout=30) as client:
         params = {"search": registrar}
         response = await client.get(
@@ -206,6 +213,7 @@ async def check_icann_accreditation(registrar: str) -> dict:
 @mcp.tool()
 async def get_instance_config() -> dict:
     """Retrieve the public configuration of the Domain Watchdog instance, including enabled features, supported TLDs, and available connectors."""
+    _track("get_instance_config")
     async with httpx.AsyncClient(timeout=30) as client:
         response = await client.get(
             f"{BASE_URL}/instance-config",
